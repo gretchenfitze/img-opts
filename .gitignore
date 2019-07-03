@@ -3,3 +3,6 @@ node_modules
 
 src/assets_lossy
 src/assets_lossless
+
+dist/**
+!dist/index.html

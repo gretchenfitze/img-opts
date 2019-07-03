@@ -14,7 +14,7 @@ const imageminOptipng = require("imagemin-optipng");
 const imageminGifsicle = require("imagemin-gifsicle");
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.js',
   output: {
     filename: 'bundle.js'

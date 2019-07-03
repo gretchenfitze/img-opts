@@ -2,15 +2,20 @@
   "name": "img-opts",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://gretchenfitze.github.io/img-opts/",
   "repository": "git@github.com:gretchenfitze/img-opts.git",
   "author": "Margarita Klubochkina <gretchenfitze@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cp -rf ./src/assets/ ./src/assets_lossless/ && cp -rf ./src/assets/ ./src/assets_lossy/ && npx webpack-dev-server --open"
+    "build": "cp -rf ./src/assets/ ./src/assets_lossless/ && cp -rf ./src/assets/ ./src/assets_lossy/ && npx webpack",
+    "start": "cp -rf ./src/assets/ ./src/assets_lossless/ && cp -rf ./src/assets/ ./src/assets_lossy/ && npx webpack-dev-server --open",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "css-loader": "^3.0.0",
     "file-loader": "^4.0.0",
+    "gh-pages": "^2.0.1",
     "imagemin-giflossy": "^5.1.10",
     "imagemin-gifsicle": "^6.0.1",
     "imagemin-jpegtran": "^6.0.0",
