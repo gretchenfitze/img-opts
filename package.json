@@ -1,0 +1,27 @@
+{
+  "name": "img-opts",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "git@github.com:gretchenfitze/img-opts.git",
+  "author": "Margarita Klubochkina <gretchenfitze@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cp -rf ./src/assets/ ./src/assets_lossless/ && cp -rf ./src/assets/ ./src/assets_lossy/ && npx webpack-dev-server --open"
+  },
+  "devDependencies": {
+    "css-loader": "^3.0.0",
+    "file-loader": "^4.0.0",
+    "imagemin-giflossy": "^5.1.10",
+    "imagemin-gifsicle": "^6.0.1",
+    "imagemin-jpegtran": "^6.0.0",
+    "imagemin-mozjpeg": "^8.0.0",
+    "imagemin-optipng": "^7.0.0",
+    "imagemin-pngquant": "^8.0.0",
+    "imagemin-svgo": "^7.0.0",
+    "imagemin-webpack": "^4.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
