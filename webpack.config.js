@@ -1,17 +1,6 @@
 var path = require('path');
 
 const ImageminPlugin = require("imagemin-webpack");
-const imageminSvgo = require("imagemin-svgo");
-
-// Lossy plugins
-const imageminMozjpeg = require("imagemin-mozjpeg");
-const imageminPngquant = require("imagemin-pngquant");
-const imageminGifLossy = require("imagemin-gifsicle");
-
-// Lossless plugins
-const imageminJpegtran = require("imagemin-jpegtran");
-const imageminOptipng = require("imagemin-optipng");
-const imageminGifsicle = require("imagemin-gifsicle");
 
 module.exports = {
   mode: 'production',
@@ -38,16 +27,10 @@ module.exports = {
               bail: false,
               imageminOptions: {
                 plugins: [
-                  imageminJpegtran(
-                    {
-                      progressive: true
-                    }
-                  ),
-                  imageminOptipng(),
-                  imageminGifsicle({
-                    interlaced: true
-                  }),
-                  imageminSvgo()
+                  ["jpegtran", { progressive: true }],
+                  ["optipng", { optimizationLevel: 5 }],
+                  ["gifsicle", { interlaced: true }],
+                  "svgo"
                 ]
               }
             }
@@ -64,22 +47,37 @@ module.exports = {
               bail: false,
               imageminOptions: {
                 plugins: [
-                  imageminMozjpeg(
+                  ["mozjpeg", { quality: 80, progressive: true }],
+                  ["pngquant", { strip: true, dithering: 0 }],
+                  ["giflossy", { colors: 128, lossy: 300 }],
+                  [
+                    "svgo",
                     {
-                      quality: 80,
-                      progressive: true
+                      plugins: [
+                        {
+                          cleanupNumericValues: {
+                            floatPrecision: 0
+                          }
+                        }
+                      ]
                     }
-                  ),
-                  imageminPngquant({
-                    strip: true,
-                    dithering: 0,
-                  }),
-                  imageminGifLossy({
-                    colors: 128,
-                    lossy: 300,
-                  }),
-                  imageminSvgo()
+                  ]
                 ]
+              }
+            }
+          },
+        ],
+      },
+      {
+        test: /.*assets_webp\/.*\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: ImageminPlugin.loader,
+            options: {
+              bail: false,
+              imageminOptions: {
+                plugins: [ "webp" ]
               }
             }
           },

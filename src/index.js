@@ -3,6 +3,7 @@ import './index.css';
 import * as images from './assets';
 import * as losslessImages from './assets_lossless';
 import * as lossyImages from './assets_lossy';
+import * as webPImages from './assets_webp';
 
 function toKb(bytes) {
   return Math.round(bytes / 1024).toLocaleString() + ' KB'
@@ -47,6 +48,7 @@ for (var i = 0; i < imgElems.length; i++) {
   const originalUrl = images[id];
   const losslessUrl = losslessImages[id];
   const lossyUrl = lossyImages[id];
+  const webPUrl = webPImages[id];
 
   fetch(originalUrl).then(resp => resp.blob()).then(blob => {
     const originalSize = blob.size;
@@ -57,6 +59,13 @@ for (var i = 0; i < imgElems.length; i++) {
 
       fetch(lossyUrl).then(resp => resp.blob()).then(blob => {
         createImg('Lossy', blob, div, originalSize);
+
+        const format = webPUrl.split('.').reverse()[0].toLowerCase();
+        if (format !== 'gif' && format !== 'svg') {
+          fetch(webPUrl).then(resp => resp.blob()).then(blob => {
+            createImg('WebP', blob, div, originalSize);
+          });
+        }
       });
     });
   });
